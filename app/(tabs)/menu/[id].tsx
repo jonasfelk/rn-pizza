@@ -1,13 +1,20 @@
 import products from '@/assets/data/products'
+import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 import { Stack, useLocalSearchParams } from 'expo-router'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { useState } from 'react'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 const sizes = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {
   const { id } = useLocalSearchParams()
   const product = products.find((product) => product.id.toString() === id)
+  const [selectedSize, setSelectedSize] = useState(sizes[0])
+
+  const addToCart = () => {
+    console.log('Add to cart', selectedSize)
+  }
 
   if (!product) {
     return <Text>Product not found</Text>
@@ -24,13 +31,35 @@ export default function ProductDetailsScreen() {
       <Text style={styles.selectSize}>Select size:</Text>
       <View style={styles.sizesContainer}>
         {sizes.map((size) => (
-          <View
+          <Pressable
+            onPress={() => setSelectedSize(size)}
             key={size}
-            style={styles.size}
+            style={[
+              styles.size,
+              {
+                backgroundColor:
+                  selectedSize === size
+                    ? Colors.light.tabIconSelected
+                    : 'transparent',
+              },
+            ]}
           >
-            <Text style={styles.sizeText}> {size}</Text>
-          </View>
+            <Text
+              style={[
+                styles.sizeText,
+                { color: selectedSize === size ? 'white' : 'black' },
+              ]}
+            >
+              {size}
+            </Text>
+          </Pressable>
         ))}
+      </View>
+      <View style={styles.button}>
+        <Button
+          onPress={addToCart}
+          text='Add to cart'
+        />
       </View>
     </View>
   )
@@ -76,6 +105,8 @@ const styles = StyleSheet.create({
   sizeText: {
     fontSize: 16,
     fontWeight: '500',
-    marginRight: 5,
+  },
+  button: {
+    marginTop: 'auto',
   },
 })
