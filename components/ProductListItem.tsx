@@ -9,12 +9,11 @@ export const defaultPizzaImage =
 export default function ProductListItem({ product }: { product: Product }) {
   return (
     <Link
-      href={`/menu/${product.id}`}
-      // href={{
-      //   pathname: '/[id]',
-      //   params: { id: `${product.id}` },
-      // }}
-
+      // href={`/menu/${product.id}`}
+      href={{
+        pathname: '/(tabs)/menu/[id]',
+        params: { id: `${product.id}` },
+      }}
       asChild
     >
       <Pressable style={styles.container}>
@@ -28,6 +27,21 @@ export default function ProductListItem({ product }: { product: Product }) {
       </Pressable>
     </Link>
   )
+//   <Link
+//   href='/cart'
+//   asChild
+// >
+//   <Pressable>
+//     {({ pressed }) => (
+//       <FontAwesome
+//         name='shopping-cart'
+//         size={25}
+//         color={Colors.light.text}
+//         style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+//       />
+//     )}
+//   </Pressable>
+// </Link>
 }
 
 const styles = StyleSheet.create({

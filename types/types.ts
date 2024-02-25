@@ -5,7 +5,7 @@ export type Product = {
   price: number
 }
 
-export type PizzaSize = 'S' | 'M' | 'L' | 'XL'
+export type PizzaSize = 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL'
 
 export type CartItem = {
   id: string
