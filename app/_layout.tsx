@@ -62,7 +62,7 @@ function RootLayoutNav() {
           />
           <Stack.Screen
             name='cart'
-            options={{ presentation: 'modal' }}
+            options={{ presentation: 'modal', headerShown: false }}
           />
         </Stack>
       </CartProvider>

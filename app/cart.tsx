@@ -1,30 +1,37 @@
+import Button from '@/components/Button'
 import CartListItem from '@/components/CartListItem'
 import { View } from '@/components/Themed'
+import { useQuantityCart } from '@/hooks/useQuantityCart'
 import { useCart } from '@/providers/CartProvider'
 import { StatusBar } from 'expo-status-bar'
-import { useEffect, useState } from 'react'
 import { FlatList, Platform, Text } from 'react-native'
 export default function CartScreen() {
-  const { items } = useCart()
-  const [totalQuantity, setTotalQuantity] = useState(0)
-
-  const getTotalQuantity = () => {
-    return items.reduce((total, item) => total + item.quantity, 0)
-  }
-
-  useEffect(() => {
-    setTotalQuantity(getTotalQuantity())
-  }, [items])
+  const { items, totalPrice } = useCart()
+  const { totalQuantity } = useQuantityCart()
 
   return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <Text>Cart: {totalQuantity}</Text>
+    <View style={{ padding: 10 }}>
       <FlatList
         data={items}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ padding: 10, gap: 10 }}
+        contentContainerStyle={{ gap: 10 }}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => <Text>No items in cart</Text>}
+        ListFooterComponent={() => (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginVertical: 10,
+            }}
+          >
+            <Text> Total: {totalPrice}</Text>
+            <Text>Count:{totalQuantity}</Text>
+          </View>
+        )}
       />
+      <Button text='Checkout' />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   )

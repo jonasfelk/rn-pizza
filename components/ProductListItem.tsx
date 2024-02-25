@@ -27,21 +27,6 @@ export default function ProductListItem({ product }: { product: Product }) {
       </Pressable>
     </Link>
   )
-//   <Link
-//   href='/cart'
-//   asChild
-// >
-//   <Pressable>
-//     {({ pressed }) => (
-//       <FontAwesome
-//         name='shopping-cart'
-//         size={25}
-//         color={Colors.light.text}
-//         style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-//       />
-//     )}
-//   </Pressable>
-// </Link>
 }
 
 const styles = StyleSheet.create({

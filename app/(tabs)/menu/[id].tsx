@@ -4,9 +4,7 @@ import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 import { useCart } from '@/providers/CartProvider'
 import { PizzaSize } from '@/types/types'
-import { useRoute } from '@react-navigation/native'
-import { useRouter } from 'expo-router'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { useState } from 'react'
 import {
   Image,
