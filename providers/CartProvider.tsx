@@ -50,9 +50,10 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setItems(updatedItems)
   }
 
-  const totalPrice = items.reduce(
-    (total, item) => total + item.product.price * item.quantity,
-    0
+  const totalPrice = Number(
+    items
+      .reduce((total, item) => total + item.product.price * item.quantity, 0)
+      .toFixed(2)
   )
   return (
     <CartContext.Provider

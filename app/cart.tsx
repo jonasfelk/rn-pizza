@@ -10,28 +10,37 @@ export default function CartScreen() {
   const { totalQuantity } = useQuantityCart()
 
   return (
-    <View style={{ padding: 10 }}>
+    <View
+      style={{
+        flex: 1,
+        padding: 10,
+      }}
+    >
       <FlatList
         data={items}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ gap: 10 }}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() => <Text>No items in cart</Text>}
-        ListFooterComponent={() => (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginVertical: 10,
-            }}
-          >
-            <Text> Total: {totalPrice}</Text>
-            <Text>Count:{totalQuantity}</Text>
-          </View>
+        ListEmptyComponent={() => (
+          <Text style={{ textAlign: 'center' }}> No items in cart :(</Text>
         )}
+        ListFooterComponent={() =>
+          items.length > 0 ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginVertical: 10,
+              }}
+            >
+              <Text> Total: {totalPrice}</Text>
+              <Text>Count: {totalQuantity}</Text>
+            </View>
+          ) : null
+        }
       />
-      <Button text='Checkout' />
+      {items.length > 0 ? <Button text='Checkout' /> : null}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   )
