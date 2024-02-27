@@ -14,6 +14,7 @@ import {
   Text,
   View,
 } from 'react-native'
+import * as Haptics from 'expo-haptics'
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {
@@ -48,7 +49,9 @@ export default function ProductDetailsScreen() {
         <View style={styles.sizesContainer}>
           {sizes.map((size) => (
             <Pressable
-              onPress={() => setSelectedSize(size)}
+              onPress={() => {
+                setSelectedSize(size), Haptics.selectionAsync()
+              }}
               key={size}
               style={[
                 styles.size,
