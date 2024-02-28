@@ -11,7 +11,7 @@ export default function ProductListItem({ product }: { product: Product }) {
     <Link
       // href={`/menu/${product.id}`}
       href={{
-        pathname: '/(tabs)/menu/[id]',
+        pathname: '/(user)/menu/[id]',
         params: { id: `${product.id}` },
       }}
       asChild
