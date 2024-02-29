@@ -43,7 +43,7 @@ export default function MenuLayout() {
           title: 'Menu',
           headerRight: () => (
             <Link
-              href='/'
+              href='/(admin)/menu/create'
               asChild
             >
               <Pressable>
