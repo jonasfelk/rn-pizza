@@ -15,34 +15,6 @@ export default function MenuLayout() {
           title: 'Menu',
           headerRight: () => (
             <Link
-              href='/'
-              asChild
-            >
-              <Pressable>
-                {({ pressed }) => (
-                  <>
-                    <FontAwesome
-                      name='plus-square-o'
-                      size={25}
-                      color={Colors.light.text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                    {totalQuantity > 0 && (
-                      <CartQuantity totalQuantity={totalQuantity} />
-                    )}
-                  </>
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name='[id]'
-        options={{
-          title: 'Menu',
-          headerRight: () => (
-            <Link
               href='/(admin)/menu/create'
               asChild
             >
@@ -50,7 +22,7 @@ export default function MenuLayout() {
                 {({ pressed }) => (
                   <>
                     <FontAwesome
-                      name='pencil'
+                      name='plus-square-o'
                       size={25}
                       color={Colors.light.text}
                       style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}

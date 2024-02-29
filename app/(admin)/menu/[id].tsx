@@ -1,10 +1,12 @@
 import products from '@/assets/data/products'
+import CartQuantity from '@/components/CartQuantity'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 import { PizzaSize } from '@/types/types'
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
+import { FontAwesome } from '@expo/vector-icons'
+import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router'
 
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {
@@ -17,6 +19,30 @@ export default function ProductDetailsScreen() {
   }
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: 'Menu',
+          headerRight: () => (
+            <Link
+              href={`/(admin)/menu/create?id=${id}`}
+              asChild
+            >
+              <Pressable>
+                {({ pressed }) => (
+                  <>
+                    <FontAwesome
+                      name='pencil'
+                      size={25}
+                      color={Colors.light.text}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  </>
+                )}
+              </Pressable>
+            </Link>
+          ),
+        }}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: 'Product Details' }} />
         <Image

@@ -2,14 +2,15 @@ import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 import { useState } from 'react'
-import { Text, View, StyleSheet, TextInput, Image } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Image, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
-import { Stack } from 'expo-router'
+import { Stack, useLocalSearchParams } from 'expo-router'
 export default function CreateProduct() {
   const [image, setImage] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
-
+  const { id } = useLocalSearchParams()
+  const isUpdating = !!id
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,7 +26,17 @@ export default function CreateProduct() {
       setImage(result.assets[0].uri)
     }
   }
-
+  const onSubmit = () => {
+    if (isUpdating) {
+      onUpdate()
+    } else {
+      onCreate()
+    }
+  }
+  const onUpdate = () => {
+    console.warn('update')
+    resetFields()
+  }
   const onCreate = () => {
     console.warn('create')
     resetFields()
@@ -34,9 +45,26 @@ export default function CreateProduct() {
     setName('')
     setPrice('')
   }
+  const onDelete = () => {
+    console.warn('delete')
+  }
+  const confirmDelete = () => {
+    Alert.alert('Confirm', 'Are you sure you want to delete this product?', [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: onDelete,
+        style: 'destructive',
+      },
+    ])
+  }
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Create Product' }} />
+      <Stack.Screen
+        options={{ title: isUpdating ? 'Update Product' : 'Create Product' }}
+      />
       <Image
         source={{ uri: image || defaultPizzaImage }}
         style={styles.image}
@@ -64,9 +92,17 @@ export default function CreateProduct() {
         keyboardType='numeric'
       />
       <Button
-        onPress={onCreate}
-        text='Create'
+        onPress={onSubmit}
+        text={isUpdating ? 'Update' : 'Create'}
       />
+      {isUpdating && (
+        <Text
+          onPress={confirmDelete}
+          style={styles.textButton}
+        >
+          Delete Product
+        </Text>
+      )}
     </View>
   )
 }
