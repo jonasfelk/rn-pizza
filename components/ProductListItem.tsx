@@ -1,19 +1,21 @@
 import Colors from '@/constants/Colors'
 import { Product } from '@/types/types'
-import { Link } from 'expo-router'
+import { Link, useSegments } from 'expo-router'
 import React from 'react'
 import { Image, StyleSheet, Text, Pressable } from 'react-native'
 
 export const defaultPizzaImage =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png'
 export default function ProductListItem({ product }: { product: Product }) {
+  const segments = useSegments()
+
   return (
     <Link
-      // href={`/menu/${product.id}`}
-      href={{
-        pathname: '/(user)/menu/[id]',
-        params: { id: `${product.id}` },
-      }}
+      href={
+        segments[0] === '(admin)'
+          ? `/(admin)/menu/${product.id}`
+          : `/(user)/menu/${product.id}`
+      }
       asChild
     >
       <Pressable style={styles.container}>
