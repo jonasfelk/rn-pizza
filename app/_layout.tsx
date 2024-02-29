@@ -53,7 +53,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <CartProvider>
         <Stack>
           <Stack.Screen
@@ -62,6 +63,10 @@ function RootLayoutNav() {
           />
           <Stack.Screen
             name='(user)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='(auth)'
             options={{ headerShown: false }}
           />
           <Stack.Screen
