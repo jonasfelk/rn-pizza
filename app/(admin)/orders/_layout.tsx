@@ -9,7 +9,10 @@ export default function OrdersLayout() {
       /> */}
       <Stack.Screen
         name='list'
-        options={{ headerShown: false }}
+        options={{
+          title: '',
+          headerShown: false,
+        }}
       />
     </Stack>
   )
