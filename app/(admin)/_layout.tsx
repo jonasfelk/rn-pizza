@@ -59,7 +59,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon
-              name='first-order'
+              name='list'
               color={color}
             />
           ),
