@@ -5,7 +5,7 @@ import { Link, Redirect } from 'expo-router'
 import { ActivityIndicator, View } from 'react-native'
 
 export default function Index() {
-  const { session, loading } = useAuth()
+  const { session, loading, isAdmin } = useAuth()
 
   if (loading) {
     return <ActivityIndicator size='large' />
@@ -14,6 +14,9 @@ export default function Index() {
     return <Redirect href={'/sign-in'} />
   }
 
+  if (!isAdmin) {
+    return <Redirect href={'/(user)'} />
+  }
   return (
     <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
       <Link
@@ -28,12 +31,12 @@ export default function Index() {
       >
         <Button text='Admin' />
       </Link>
-      <Link
+      {/* <Link
         href={'/sign-in'}
         asChild
       >
         <Button text='Sign In' />
-      </Link>
+      </Link> */}
       <Button
         onPress={() => supabase.auth.signOut()}
         text='Sign Out'
