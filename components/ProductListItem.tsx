@@ -1,8 +1,8 @@
 import Colors from '@/constants/Colors'
-import { Product } from '@/types/types'
+import { Product } from '@/types'
 import { Link, useSegments } from 'expo-router'
 import React from 'react'
-import { Image, StyleSheet, Text, Pressable } from 'react-native'
+import { Image, Pressable, StyleSheet, Text } from 'react-native'
 
 export const defaultPizzaImage =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png'

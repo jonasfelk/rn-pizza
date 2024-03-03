@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import { Stack, useLocalSearchParams } from 'expo-router'
 import orders from '@/assets/data/orders'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
-import { Order, OrderItem } from '@/types/types'
+import { Order, OrderItem } from '@/types'
+import { Stack, useLocalSearchParams } from 'expo-router'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 export default function OrderDetail() {
   const { id } = useLocalSearchParams()

@@ -1,8 +1,10 @@
 import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
+import { useProduct } from '@/hooks/api/products'
 import { useCart } from '@/providers/CartProvider'
-import { PizzaSize } from '@/types/types'
+import { PizzaSize } from '@/types'
+import * as Haptics from 'expo-haptics'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { useState } from 'react'
 import {
@@ -14,9 +16,6 @@ import {
   Text,
   View,
 } from 'react-native'
-import * as Haptics from 'expo-haptics'
-import { useProduct } from '@/hooks/api/products'
-
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {

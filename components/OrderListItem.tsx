@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React from 'react'
-import { Order } from '@/types/types'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { Order } from '@/types'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { Link, useSegments } from 'expo-router'
+import React from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 dayjs.extend(relativeTime)
 
@@ -13,7 +13,7 @@ type OrderListItemProps = {
 
 export default function OrderListItem({ order }: OrderListItemProps) {
   const segments = useSegments()
-  
+
   return (
     <Link
       href={

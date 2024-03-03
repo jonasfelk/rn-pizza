@@ -1,6 +1,6 @@
 import orders from '@/assets/data/orders'
 import OrderListItem from '@/components/OrderListItem'
-import { Order } from '@/types/types'
+import { Order } from '@/types'
 import { FlatList } from 'react-native'
 export default function Orders() {
   return (

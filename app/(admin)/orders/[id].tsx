@@ -2,7 +2,7 @@ import orders from '@/assets/data/orders'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
 import Colors from '@/constants/Colors'
-import { Order, OrderItem, OrderStatusList } from '@/types/types'
+import { Order, OrderItem, OrderStatusList } from '@/types'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 

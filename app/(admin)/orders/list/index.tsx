@@ -1,10 +1,7 @@
 import orders from '@/assets/data/orders'
-import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
-import { Order, OrderItem, OrderStatusList } from '@/types/types'
-import { useLocalSearchParams } from 'expo-router'
-import { FlatList, Pressable, Text, View } from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { Order } from '@/types'
+import { FlatList } from 'react-native'
 export default function Orders() {
   return (
     <FlatList

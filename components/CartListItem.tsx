@@ -1,6 +1,6 @@
 import Colors from '@/constants/Colors'
 import { useCart } from '@/providers/CartProvider'
-import { CartItem } from '@/types/types'
+import { CartItem } from '@/types'
 import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
