@@ -1,4 +1,3 @@
-import products from '@/assets/data/products'
 import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
@@ -7,6 +6,7 @@ import { PizzaSize } from '@/types/types'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { useState } from 'react'
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -15,13 +15,14 @@ import {
   View,
 } from 'react-native'
 import * as Haptics from 'expo-haptics'
+import { useProduct } from '@/hooks/api/products'
+
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {
   const { addItem } = useCart()
   const router = useRouter()
   const { id } = useLocalSearchParams()
-  const product = products.find((product) => product.id.toString() === id)
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('S')
 
   const addToCart = () => {
@@ -31,8 +32,17 @@ export default function ProductDetailsScreen() {
     router.push('/cart')
   }
 
-  if (!product) {
-    return <Text>Product not found</Text>
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useProduct(parseInt(typeof id === 'string' ? id : id[0]))
+
+  if (isLoading) {
+    return <ActivityIndicator />
+  }
+  if (error || !product) {
+    return <Text>Failed to fetch product</Text>
   }
   return (
     <View style={styles.container}>

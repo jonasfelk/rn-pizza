@@ -3,7 +3,7 @@ import Colors from '@/constants/Colors'
 import { useQuantityCart } from '@/hooks/useQuantityCart'
 import { FontAwesome } from '@expo/vector-icons'
 import { Link, Stack } from 'expo-router'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable } from 'react-native'
 
 export default function MenuLayout() {
   const { totalQuantity } = useQuantityCart()

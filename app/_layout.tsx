@@ -1,8 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import {
-  DefaultTheme,
-  ThemeProvider
-} from '@react-navigation/native'
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
@@ -11,10 +8,11 @@ import { useEffect } from 'react'
 import { useColorScheme } from '@/components/useColorScheme'
 import AuthProvider from '@/providers/AuthProvider'
 import CartProvider from '@/providers/CartProvider'
+import QueryProvider from '@/providers/QueryProvider'
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary
+  ErrorBoundary,
 } from 'expo-router'
 
 export const unstable_settings = {
@@ -56,26 +54,28 @@ function RootLayoutNav() {
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
-        <CartProvider>
-          <Stack>
-            <Stack.Screen
-              name='(admin)'
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='(user)'
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='(auth)'
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='cart'
-              options={{ presentation: 'modal', headerShown: false }}
-            />
-          </Stack>
-        </CartProvider>
+        <QueryProvider>
+          <CartProvider>
+            <Stack>
+              <Stack.Screen
+                name='(admin)'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='(user)'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='(auth)'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='cart'
+                options={{ presentation: 'modal', headerShown: false }}
+              />
+            </Stack>
+          </CartProvider>
+        </QueryProvider>
       </AuthProvider>
     </ThemeProvider>
   )

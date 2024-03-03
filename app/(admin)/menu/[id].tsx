@@ -1,22 +1,37 @@
-import products from '@/assets/data/products'
-import CartQuantity from '@/components/CartQuantity'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
+import { useProduct } from '@/hooks/api/products'
 import { PizzaSize } from '@/types/types'
 import { FontAwesome } from '@expo/vector-icons'
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router'
 
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 export default function ProductDetailsScreen() {
   const router = useRouter()
   const { id } = useLocalSearchParams()
-  const product = products.find((product) => product.id.toString() === id)
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useProduct(parseInt(typeof id === 'string' ? id : id[0]))
 
-  if (!product) {
-    return <Text>Product not found</Text>
+  if (isLoading) {
+    return <ActivityIndicator />
   }
+  if (error || !product) {
+    return <Text>Failed to fetch product</Text>
+  }
+
   return (
     <View style={styles.container}>
       <Stack.Screen

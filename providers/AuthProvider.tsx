@@ -5,16 +5,16 @@ import {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react'
 
-export type AuthData = {
+type AuthData = {
   session: Session | null
+  profile: any
   loading: boolean
-  profile: null
   isAdmin: boolean
 }
+
 const AuthContext = createContext<AuthData>({
   session: null,
   loading: true,
@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthData>({
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null)
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       const {
         data: { session },
       } = await supabase.auth.getSession()
+
       setSession(session)
 
       if (session) {
@@ -43,22 +44,22 @@ export default function AuthProvider({ children }: PropsWithChildren) {
           .single()
         setProfile(data || null)
       }
+
       setLoading(false)
     }
 
     fetchSession()
-
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-  })
+  }, [])
 
-  // const authData = useMemo(
-  //   () => ({ session, loading, profile, isAdmin: profile?.group === 'ADMIN' }),
-  //   [session]
-  // )
   return (
-    <AuthContext.Provider value={{ session, loading, profile, isAdmin: profile?.group === 'ADMIN' }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{ session, loading, profile, isAdmin: profile?.group === 'ADMIN' }}
+    >
+      {children}
+    </AuthContext.Provider>
   )
 }
 
