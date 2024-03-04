@@ -1,4 +1,5 @@
 import { useOrderDetails } from '@/api/orders'
+import { useUpdateOrderSubscription } from '@/api/orders/useInsertOrderSubscription'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
 import { Order, OrderItem } from '@/types'
@@ -16,7 +17,7 @@ export default function OrderDetail() {
   const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0])
 
   const { data: order, isLoading, error } = useOrderDetails(id)
-
+  useUpdateOrderSubscription(id)
   if (isLoading) {
     return <ActivityIndicator />
   }
@@ -33,7 +34,7 @@ export default function OrderDetail() {
       <FlatList
         data={order?.order_items}
         renderItem={({ item }) => (
-          <OrderItemListItem item={item as OrderItem} />
+          <OrderItemListItem item={item} />
         )}
         contentContainerStyle={{ gap: 10 }}
       />
