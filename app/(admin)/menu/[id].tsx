@@ -1,5 +1,6 @@
 import { useProduct } from '@/api/products'
 import { defaultPizzaImage } from '@/components/ProductListItem'
+import RemoteImage from '@/components/RemoteImage'
 import Colors from '@/constants/Colors'
 import { PizzaSize } from '@/types'
 import { FontAwesome } from '@expo/vector-icons'
@@ -60,8 +61,9 @@ export default function ProductDetailsScreen() {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: 'Product Details' }} />
-        <Image
-          source={{ uri: product.image || defaultPizzaImage }}
+        <RemoteImage
+          path={product.image}
+          fallback={defaultPizzaImage}
           style={styles.image}
         />
         <Text style={styles.title}>{product.name}</Text>

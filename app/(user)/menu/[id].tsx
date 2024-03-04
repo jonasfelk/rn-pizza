@@ -1,6 +1,7 @@
 import { useProduct } from '@/api/products'
 import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
+import RemoteImage from '@/components/RemoteImage'
 import Colors from '@/constants/Colors'
 import { useCart } from '@/providers/CartProvider'
 import { PizzaSize } from '@/types'
@@ -47,8 +48,9 @@ export default function ProductDetailsScreen() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: 'Product Details' }} />
-        <Image
-          source={{ uri: product.image || defaultPizzaImage }}
+        <RemoteImage
+          path={product.image}
+          fallback={defaultPizzaImage}
           style={styles.image}
         />
         <Text style={styles.title}>{product.name}</Text>
