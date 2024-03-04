@@ -1,5 +1,5 @@
+import { useProductList } from '@/api/products'
 import ProductListItem from '@/components/ProductListItem'
-import { useProductList } from '@/hooks/api/products'
 import { ActivityIndicator, FlatList, Text } from 'react-native'
 
 export default function MenuScreen() {

@@ -1,7 +1,7 @@
+import { useProduct } from '@/api/products'
 import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
-import { useProduct } from '@/hooks/api/products'
 import { useCart } from '@/providers/CartProvider'
 import { PizzaSize } from '@/types'
 import * as Haptics from 'expo-haptics'

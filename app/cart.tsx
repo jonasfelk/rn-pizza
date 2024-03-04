@@ -6,7 +6,7 @@ import { useCart } from '@/providers/CartProvider'
 import { StatusBar } from 'expo-status-bar'
 import { FlatList, Platform, Text } from 'react-native'
 export default function CartScreen() {
-  const { items, totalPrice } = useCart()
+  const { items, total, checkout } = useCart()
   const { totalQuantity } = useQuantityCart()
 
   return (
@@ -34,13 +34,18 @@ export default function CartScreen() {
                 marginVertical: 10,
               }}
             >
-              <Text> Total: {totalPrice}</Text>
+              <Text> Total: {total}</Text>
               <Text>Count: {totalQuantity}</Text>
             </View>
           ) : null
         }
       />
-      {items.length > 0 ? <Button text='Checkout' /> : null}
+      {items.length > 0 ? (
+        <Button
+          onPress={checkout}
+          text='Checkout'
+        />
+      ) : null}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   )

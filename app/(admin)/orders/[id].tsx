@@ -1,40 +1,57 @@
-import orders from '@/assets/data/orders'
+import { useOrderDetails, useUpdateOrder } from '@/api/orders'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
 import Colors from '@/constants/Colors'
-import { Order, OrderItem, OrderStatusList } from '@/types'
+import { OrderStatus, OrderStatusList } from '@/types'
 import { Stack, useLocalSearchParams } from 'expo-router'
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 
 export default function OrderDetail() {
-  const { id } = useLocalSearchParams()
+  const { id: idString } = useLocalSearchParams()
+  const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0])
 
-  const order = orders.find((order) => order.id.toString() === id)
+  const { data: order, isLoading, error } = useOrderDetails(id)
 
-  if (!order) {
-    return <Text>Order not found!</Text>
+  const { mutate: updateOrder, isPending } = useUpdateOrder()
+
+  const updateStatus = (status: OrderStatus) => {
+    updateOrder({ id, updatedFields: { status } })
+  }
+
+  if (isLoading) {
+    return <ActivityIndicator />
+  }
+  if (error || !order) {
+    return <Text>Failed to fetch</Text>
   }
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: `Order #${order.id}` }} />
+      <Stack.Screen options={{ title: `Order #${order?.id}` }} />
 
-      <OrderListItem order={order as Order} />
+      <OrderListItem order={order} />
 
       <FlatList
         data={order.order_items}
-        renderItem={({ item }) => (
-          <OrderItemListItem item={item as OrderItem} />
-        )}
+        renderItem={({ item }) => <OrderItemListItem item={item} />}
         contentContainerStyle={{ gap: 10 }}
         ListFooterComponent={() => (
           <>
-            <Text style={{ fontWeight: 'bold' }}>Status</Text>
+            <Text style={{ fontWeight: 'bold' }}>
+              Status {isPending && <ActivityIndicator size={12} />}
+            </Text>
             <View style={{ flexDirection: 'row', gap: 5 }}>
               {OrderStatusList.map((status) => (
                 <Pressable
                   key={status}
-                  onPress={() => console.warn('Update status')}
+                  onPress={() => updateStatus(status)}
                   style={{
                     borderColor: Colors.light.tint,
                     borderWidth: 1,
@@ -42,7 +59,7 @@ export default function OrderDetail() {
                     borderRadius: 5,
                     marginVertical: 10,
                     backgroundColor:
-                      order?.status === status
+                      order.status === status
                         ? Colors.light.tint
                         : 'transparent',
                   }}
@@ -50,7 +67,7 @@ export default function OrderDetail() {
                   <Text
                     style={{
                       color:
-                        order?.status === status ? 'white' : Colors.light.tint,
+                        order.status === status ? 'white' : Colors.light.tint,
                     }}
                   >
                     {status}

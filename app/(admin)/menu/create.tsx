@@ -1,24 +1,24 @@
-import Button from '@/components/Button'
-import { defaultPizzaImage } from '@/components/ProductListItem'
-import Colors from '@/constants/Colors'
-import { useEffect, useState } from 'react'
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  Image,
-  Alert,
-  ActivityIndicator,
-} from 'react-native'
-import * as ImagePicker from 'expo-image-picker'
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import {
   useDeleteProduct,
   useInsertProduct,
   useProduct,
   useUpdateProduct,
-} from '@/hooks/api/products'
+} from '@/api/products'
+import Button from '@/components/Button'
+import { defaultPizzaImage } from '@/components/ProductListItem'
+import Colors from '@/constants/Colors'
+import * as ImagePicker from 'expo-image-picker'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
+import { useEffect, useState } from 'react'
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 export default function CreateProduct() {
   const [image, setImage] = useState<string | null>(null)
   const [name, setName] = useState('')

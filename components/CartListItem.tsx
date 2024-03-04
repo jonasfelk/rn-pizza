@@ -4,6 +4,7 @@ import { CartItem } from '@/types'
 import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { defaultPizzaImage } from './ProductListItem'
 
 type CartListItemProps = {
   cartItem: CartItem
@@ -14,7 +15,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: cartItem.product.image || '' }}
+        source={{ uri: cartItem.product.image || defaultPizzaImage }}
         style={styles.image}
         resizeMode='contain'
       />

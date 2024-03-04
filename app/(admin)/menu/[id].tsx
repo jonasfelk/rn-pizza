@@ -1,6 +1,6 @@
+import { useProduct } from '@/api/products'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
-import { useProduct } from '@/hooks/api/products'
 import { PizzaSize } from '@/types'
 import { FontAwesome } from '@expo/vector-icons'
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router'
