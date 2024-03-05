@@ -1,7 +1,5 @@
 import { useProductList } from '@/api/products'
-import Button from '@/components/Button'
 import ProductListItem from '@/components/ProductListItem'
-import { supabase } from '@/lib/supabase'
 import { ActivityIndicator, FlatList, Text } from 'react-native'
 
 export default function MenuScreen() {
@@ -25,12 +23,6 @@ export default function MenuScreen() {
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={() => <Text>No products found</Text>}
       ListHeaderComponent={() => <Text>Choose your pizza</Text>}
-      ListFooterComponent={() => (
-        <Button
-          onPress={() => supabase.auth.signOut()}
-          text='Sign Out'
-        />
-      )}
     />
   )
 }
