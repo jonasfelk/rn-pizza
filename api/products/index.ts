@@ -17,7 +17,7 @@ export const useProductList = () => {
 }
 
 export const useProduct = (id: number) => {
-  return useQuery<Product>({
+  return useQuery({
     queryKey: ['products', id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -25,6 +25,7 @@ export const useProduct = (id: number) => {
         .select('*')
         .eq('id', id)
         .single()
+
       if (error) {
         throw new Error(error.message)
       }

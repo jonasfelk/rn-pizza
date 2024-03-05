@@ -20,17 +20,21 @@ import {
   View,
 } from 'react-native'
 
-import * as FileSystem from 'expo-file-system'
-import { randomUUID } from 'expo-crypto'
 import { supabase } from '@/lib/supabase'
 import { decode } from 'base64-arraybuffer'
+import { randomUUID } from 'expo-crypto'
+import * as FileSystem from 'expo-file-system'
 export default function CreateProduct() {
   const [image, setImage] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
-  const { id: idString } = useLocalSearchParams()
-  const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0])
-  const isUpdating = !!idString
+
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(
+    typeof idString === 'string' ? idString : idString?.[0]
+  );
+  const isUpdating = !!idString;
+  
   const router = useRouter()
 
   const { mutate: insertProduct, isPending: isInsertPending } =
@@ -42,12 +46,14 @@ export default function CreateProduct() {
   const { data: updatingProduct } = useProduct(id)
 
   const isAnyPending = isInsertPending || isUpdatePending
-
+    
+    
   useEffect(() => {
     if (updatingProduct) {
       setName(updatingProduct.name)
       setPrice(updatingProduct.price.toString())
       setImage(updatingProduct.image)
+      console.log(updatingProduct?.image);
     }
   }, [updatingProduct])
 
@@ -71,9 +77,10 @@ export default function CreateProduct() {
       onCreate()
     }
   }
-  const onUpdate = () => {
+  const onUpdate = async () => {
+    const imagePath = await uploadImage()
     updateProduct(
-      { id, name, price: parseFloat(price), image },
+      { id, name, price: parseFloat(price), image: imagePath },
       {
         onSuccess: () => {
           resetFields()
