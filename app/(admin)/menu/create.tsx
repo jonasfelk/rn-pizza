@@ -24,17 +24,16 @@ import { supabase } from '@/lib/supabase'
 import { decode } from 'base64-arraybuffer'
 import { randomUUID } from 'expo-crypto'
 import * as FileSystem from 'expo-file-system'
+import RemoteImage from '@/components/RemoteImage'
 export default function CreateProduct() {
-  const [image, setImage] = useState<string | null>(null)
+  const [image, setImage] = useState<string | null>('')
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
 
-  const { id: idString } = useLocalSearchParams();
-  const id = parseFloat(
-    typeof idString === 'string' ? idString : idString?.[0]
-  );
-  const isUpdating = !!idString;
-  
+  const { id: idString } = useLocalSearchParams()
+  const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0])
+  const isUpdating = !!idString
+
   const router = useRouter()
 
   const { mutate: insertProduct, isPending: isInsertPending } =
@@ -46,14 +45,12 @@ export default function CreateProduct() {
   const { data: updatingProduct } = useProduct(id)
 
   const isAnyPending = isInsertPending || isUpdatePending
-    
-    
+
   useEffect(() => {
     if (updatingProduct) {
       setName(updatingProduct.name)
       setPrice(updatingProduct.price.toString())
       setImage(updatingProduct.image)
-      console.log(updatingProduct?.image);
     }
   }, [updatingProduct])
 
@@ -155,6 +152,12 @@ export default function CreateProduct() {
         source={{ uri: image || defaultPizzaImage }}
         style={styles.image}
       />
+      {/* <RemoteImage
+        path={image}
+        fallback={defaultPizzaImage}
+        style={styles.image}
+        resizeMode='contain'
+      /> */}
       <Text
         onPress={pickImage}
         style={styles.textButton}
