@@ -1,6 +1,7 @@
 import { useInsertOrderItems } from '@/api/order-items'
 import { useInsertOrder } from '@/api/orders'
 import { CartItem, Product, Tables } from '@/types'
+import { initialisePaymentSheet, openPaymentSheet } from '@/lib/stripe'
 import { randomUUID } from 'expo-crypto'
 import { useRouter } from 'expo-router'
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
@@ -63,7 +64,11 @@ export default function CartProvider({ children }: PropsWithChildren) {
       .toFixed(2)
   )
   const clearCart = () => setItems([])
-  const checkout = () => {
+  const checkout = async () => {
+    await initialisePaymentSheet(Math.floor(total * 100))
+    const payed = await openPaymentSheet()
+    if (!payed) return
+
     insertOrder(
       { total },
       {
