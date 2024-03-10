@@ -2,6 +2,7 @@ import { useOrderDetails, useUpdateOrder } from '@/api/orders'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import OrderListItem from '@/components/OrderListItem'
 import Colors from '@/constants/Colors'
+import { notifyUserAboutOrderUpdate } from '@/lib/notifications'
 import { OrderStatus, OrderStatusList } from '@/types'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import {
@@ -21,8 +22,12 @@ export default function OrderDetail() {
 
   const { mutate: updateOrder, isPending } = useUpdateOrder()
 
-  const updateStatus = (status: OrderStatus) => {
-    updateOrder({ id, updatedFields: { status } })
+  const updateStatus = async (status: OrderStatus) => {
+    await updateOrder({ id, updatedFields: { status } })
+
+    if (order) {
+      await notifyUserAboutOrderUpdate({ ...order, status })
+    }
   }
 
   if (isLoading) {
